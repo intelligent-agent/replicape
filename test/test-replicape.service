@@ -1,0 +1,10 @@
+[Unit]
+Description=Script for testing Replicape
+After=redeem.service
+
+[Service]
+ExecStart=/usr/src/Replicape/test/test.py
+
+[Install]
+WantedBy=basic.target
+
