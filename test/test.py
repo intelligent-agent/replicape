@@ -37,7 +37,7 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/Replicape/test/Replicape_0A4A.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom")
+    os.system("cat /usr/src/replicape/test/Replicape_0A4A.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom")
     print "Done"
 
 def test_steppers():
