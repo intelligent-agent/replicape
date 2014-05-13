@@ -3,7 +3,7 @@ Description=Script for testing Replicape
 After=redeem.service
 
 [Service]
-ExecStart=/usr/src/Replicape/test/test.py
+ExecStart=/usr/src/replicape/test/test.py
 
 [Install]
 WantedBy=basic.target
