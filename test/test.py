@@ -6,8 +6,8 @@ import sys
 
 sys.stdout = sys.stderr
 
-TTY_NORET="/dev/pts/7"
-TTY_RET="/dev/pts/5"
+TTY_NORET="/dev/testing_1"
+TTY_RET="/dev/toggle_1"
 
 def wait_for_pipes():
     while not os.path.exists(TTY_NORET):
@@ -40,19 +40,33 @@ def write_eeprom():
     os.system("cat /usr/src/replicape/test/Replicape_0A4A.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom")
     print "Done"
 
+
 def test_steppers():
     print "testing steppers"
     send("G91")
-    send("G1 X1 F30")
-    send("G1 X-1 F30")
-    send("G1 Y1 F30")
-    send("G1 Y-1 F30")
-    send("G1 Z1 F30")
-    send("G1 Z-1 F30")
-    send("G1 E1 F30")
-    send("G1 E-1 F30")
-    send("G1 H1 F30")
-    send("G1 H-1 F30")
+    send_receive("M350 X0 Y0 Z0 E0 H0") # Microstepping
+    send("G1 X4 Y4 Z4 E4 H4 F100")
+
+    send_receive("M350 X1 Y1 Z1 E1 H1")
+    send("G1 X10 Y10 Z10 E10 H10 F1000")
+
+    send_receive("M350 X2 Y2 Z2 E2 H2")
+    send("G1 X10 Y10 Z10 E10 H10 F1000")
+
+    send_receive("M350 X3 Y3 Z3 E3 H3")
+    send("G1 X10 Y10 Z10 E10 H10 F1000")
+
+    send_receive("M350 X4 Y4 Z4 E4 H4")
+    send("G1 X10 Y10 Z10 E10 H10 F1000")
+
+    send_receive("M350 X5 Y5 Z5 E5 H5")
+    send("G1 X10 Y10 Z10 E10 H10 F1000")
+
+    send_receive("M350 X0 Y0 Z0 E0 H0")
+    send("G1 X-4 Y-4 Z-4 E-4 H-4 F100")
+
+    send_receive("M400") # Wait until done
+
     print "Done"
 
 def enable_mosfets():
@@ -67,7 +81,29 @@ def enable_mosfets():
 
 def test_thermistors():
     print "testing thermistors"
-    print send_receive("M105")
+    ret = send_receive("M105")
+    pos = ret.find("T:")
+    pos2 = ret.find("B:")
+    t0 = float(ret[pos+2:pos2])
+    pos = ret.find("B:")
+    pos2 = ret.find("T1:")
+    t1 = float(ret[pos+2:pos2])
+    pos = ret.find("T1:")
+    pos2 = ret.find("\n")
+    t2 = float(ret[pos+3:])
+    
+    ok = {"t0": 0, "t1": 0, "t2": 0}
+    if abs(t0-100) < 4:
+        ok["t0"] = 1
+    if abs(t1-100) < 4:
+        ok["t1"] = 1
+    if abs(t2-100) < 4:
+        ok["t2"] = 1          
+
+    if not 0 in ok.values(): # All OK
+        enable_mosfets()    
+    else: 
+        print "Error in thermistors. Returned '"+ret+"'"
     print "Done"
 
 def disable_mosfet(val):
@@ -107,6 +143,10 @@ wait_for_pipes()
 write_eeprom()
 enable_mosfets()
 test_endstops()
+time.sleep(1)
 test_steppers()
 test_thermistors()
+
+print "testing done!"
+   
 
