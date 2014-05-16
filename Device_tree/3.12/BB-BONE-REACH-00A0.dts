@@ -106,7 +106,7 @@
         __overlay__ {			
             status = "okay";
             adc {
-                ti,adc-channels = <0 1 2 3>;
+                ti,adc-channels = <0 1 2 3 4 5 6 7>;
             };
         };
     };
