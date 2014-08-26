@@ -1,0 +1,8 @@
+Changelog Rev A4A -> Rev A5
+========================
+- Reverse polarity protection
+- Tripple connectors and 5V on end stops
+- Input protection on end stops
+- Duble connectors on thermistors
+- Servo output
+- Programmable/trimmable rise time on heaters. 
