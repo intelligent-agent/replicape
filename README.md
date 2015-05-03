@@ -31,5 +31,13 @@ This is the repository for the hardware, the software has a separate repository
 Look at the wiki, it will tell you all you need to know. If not - 
 have a look at the redeem repository. If all else fails, bug Elias. 
 
-Blog: http://hipstercircuits.com  
-Wiki: wiki.thing-printer.com and also wiki.replicape.com   
+Blog: http://www.thing-printer.com/blog/
+Wiki: http://wiki.thing-printer.com
+
+
+Contributors: 
+Elias Bakken
+Dirk Eichel
+Stoneshop
+Bent Furevik
+
