@@ -1,6 +1,5 @@
 version;4;5;http://eagleup.wordpress.com/;
-settings;/home/elias/eagle-7.2.0/ulp/eagleUp4.5/models/;/usr/bin/convert
-;/usr/bin/composite;rm;
+settings;C:\Users\Elias\workspace\replicape\models\;C:\Program Files\ImageMagick-6.9.1-Q16\convert.exe;C:\Program Files\ImageMagick-6.9.1-Q16\composite.exe;rm;
 color;0x141414;0x202020;silver;white;
 images;/home/elias/workspace/replicape/PCB_rev_B1/eagleup/;eagleUp_Replicape_B1;png;300;png;
 outline-line;13.550000;4.200000;14.250000;4.200000;1.600000;
