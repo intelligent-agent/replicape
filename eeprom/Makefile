@@ -1,11 +1,11 @@
 # Makefile for flashing the eeprom of the Replicape
 
 all:
-	#node ./eeprom.js -w replicape_00A3.json
-	node ./eeprom.js -w replicape_0A4A.json
+	nodejs ./eeprom.js -w replicape_00B1.json
 
 install:
-	cat Replicape.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom
+	cat Replicape.eeprom > /sys/devices/platform/ocp/4819c000.i2c/i2c-2/2-0054/eeprom
+	#cat Replicape.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom
 
 
 reach:
