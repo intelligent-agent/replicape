@@ -16707,7 +16707,6 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <part name="R21" library="rcl" deviceset="R-EU_" device="R0402" value="4.7K"/>
 <part name="U11" library="custom" deviceset="PCA9685PW" device=""/>
 <part name="GND35" library="supply1" deviceset="GND" device=""/>
-<part name="R22" library="rcl" deviceset="R-EU_" device="R0402" value="4.7K"/>
 <part name="GND36" library="supply1" deviceset="GND" device=""/>
 <part name="C13" library="rcl" deviceset="C-EU" device="C0402" value="0.1uF"/>
 <part name="+3V1" library="supply1" deviceset="+3V3" device=""/>
@@ -16761,8 +16760,8 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <part name="C47" library="rcl" deviceset="C-EU" device="C1206" value="10uF"/>
 <part name="C48" library="rcl" deviceset="C-EU" device="C1206" value="10uF"/>
 <part name="GND28" library="supply1" deviceset="GND" device=""/>
-<part name="C49" library="rcl" deviceset="C-EU" device="C0805" value="22uF"/>
-<part name="C50" library="rcl" deviceset="C-EU" device="C0805" value="22uF"/>
+<part name="C49" library="rcl" deviceset="C-EU" device="C1206" value="22uF"/>
+<part name="C50" library="rcl" deviceset="C-EU" device="C1206" value="22uF"/>
 <part name="GND29" library="supply1" deviceset="GND" device=""/>
 <part name="GND30" library="supply1" deviceset="GND" device=""/>
 <part name="C51" library="rcl" deviceset="C-EU" device="C0402" value="22nF"/>
@@ -16774,7 +16773,7 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <part name="R43" library="rcl" deviceset="R-EU_" device="R0402" value="10K"/>
 <part name="C52" library="rcl" deviceset="C-EU" device="C1206" value="10uF"/>
 <part name="GND58" library="supply1" deviceset="GND" device=""/>
-<part name="C53" library="rcl" deviceset="C-EU" device="C0805" value="22uF"/>
+<part name="C53" library="rcl" deviceset="C-EU" device="C1206" value="10uF"/>
 <part name="GND61" library="supply1" deviceset="GND" device=""/>
 <part name="GND67" library="supply1" deviceset="GND" device=""/>
 <part name="GND71" library="supply1" deviceset="GND" device=""/>
@@ -17070,7 +17069,7 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <text x="487.68" y="406.4" size="1.778" layer="94" rot="MR0">Thermistors</text>
 <text x="452.12" y="474.98" size="1.778" layer="94">End stops 1</text>
 <text x="518.16" y="223.52" size="1.778" layer="94">EEPROM</text>
-<text x="175.26" y="353.06" size="1.778" layer="94">Dallas 1W</text>
+<text x="434.34" y="226.06" size="1.778" layer="94">Dallas 1W</text>
 </plain>
 <instances>
 <instance part="FRAME2" gate="G$1" x="0" y="2.54"/>
@@ -17221,7 +17220,6 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <instance part="C46" gate="G$1" x="469.9" y="378.46" rot="MR0"/>
 <instance part="3.3V" gate="G$1" x="538.48" y="91.44"/>
 <instance part="GND34" gate="1" x="546.1" y="160.02"/>
-<instance part="R22" gate="G$1" x="513.08" y="203.2" rot="R90"/>
 <instance part="GND36" gate="1" x="520.7" y="160.02"/>
 <instance part="C13" gate="G$1" x="541.02" y="218.44" smashed="yes">
 <attribute name="NAME" x="536.448" y="218.821" size="1.778" layer="95"/>
@@ -18566,9 +18564,10 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <pinref part="U18" gate="G$1" pin="VCC"/>
 </segment>
 <segment>
-<wire x1="513.08" y1="208.28" x2="513.08" y2="215.9" width="0.1524" layer="91"/>
-<pinref part="R22" gate="G$1" pin="2"/>
 <pinref part="+3V2" gate="G$1" pin="+3V3"/>
+<wire x1="513.08" y1="215.9" x2="513.08" y2="185.42" width="0.1524" layer="91"/>
+<wire x1="513.08" y1="185.42" x2="551.18" y2="185.42" width="0.1524" layer="91"/>
+<pinref part="U18" gate="G$1" pin="A2"/>
 </segment>
 <segment>
 <pinref part="U19" gate="A" pin="VCC"/>
@@ -19101,7 +19100,7 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <pinref part="C55" gate="G$1" pin="1"/>
 </segment>
 </net>
-<net name="N$244" class="0">
+<net name="COMP" class="0">
 <segment>
 <wire x1="88.9" y1="144.78" x2="91.44" y2="144.78" width="0.1524" layer="91"/>
 <pinref part="U10" gate="G$1" pin="COMP"/>
@@ -19823,14 +19822,6 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <pinref part="X23" gate="-2" pin="S"/>
 <wire x1="447.04" y1="195.58" x2="467.36" y2="195.58" width="0.1524" layer="91"/>
 <label x="452.12" y="195.58" size="1.778" layer="95"/>
-</segment>
-</net>
-<net name="N$149" class="0">
-<segment>
-<wire x1="513.08" y1="198.12" x2="513.08" y2="185.42" width="0.1524" layer="91"/>
-<wire x1="513.08" y1="185.42" x2="551.18" y2="185.42" width="0.1524" layer="91"/>
-<pinref part="R22" gate="G$1" pin="1"/>
-<pinref part="U18" gate="G$1" pin="A2"/>
 </segment>
 </net>
 <net name="N$1" class="0">

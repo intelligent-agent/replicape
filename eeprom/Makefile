@@ -1,7 +1,7 @@
 # Makefile for flashing the eeprom of the Replicape
 
 all:
-	nodejs ./eeprom.js -w replicape_00B1.json
+	nodejs ./eeprom.js -w replicape_00B2.json
 
 install:
 	cat Replicape.eeprom > /sys/devices/platform/ocp/4819c000.i2c/i2c-2/2-0054/eeprom
