@@ -41,7 +41,7 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/replicape/test/Replicape_00B2.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom")
+    os.system("cat /usr/src/replicape/test/Replicape_00B2.eeprom > /sys/bus/i2c/devices/2-0054/nvmem/at24-1/nvmem")
     print "Done"
 
 
@@ -137,7 +137,7 @@ def home_all():
     print "Homing done"
 
 wait_for_pipes()
-#write_eeprom()
+write_eeprom()
 enable_mosfets()
 home_all()
 
