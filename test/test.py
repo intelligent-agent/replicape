@@ -20,10 +20,14 @@ def send(msg):
     os.write(f, msg+"\n")
     os.close(f)
 
-def send_receive(msg):
+def send_receive(msg, match = None):
     f = os.open(TTY_RET, os.O_RDWR)
     os.write(f, msg+"\n")
     ret = readline_custom(f)
+    if match is not None: 
+        while ret != match:
+            ret = readline_custom(f)
+            print "ret: "+ret
     os.close(f)
     return ret
     
@@ -37,46 +41,34 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/replicape/test/Replicape_0A4A.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom")
+    os.system("cat /usr/src/replicape/test/Replicape_00B2.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom")
     print "Done"
 
 
 def test_steppers():
     print "testing steppers"
-    send("G91")
-    send_receive("M350 X0 Y0 Z0 E0 H0") # Microstepping
-    send("G1 X4 Y4 Z4 E4 H4 F100")
-
-    send_receive("M350 X1 Y1 Z1 E1 H1")
-    send("G1 X10 Y10 Z10 E10 H10 F1000")
-
-    send_receive("M350 X2 Y2 Z2 E2 H2")
-    send("G1 X10 Y10 Z10 E10 H10 F1000")
-
-    send_receive("M350 X3 Y3 Z3 E3 H3")
-    send("G1 X10 Y10 Z10 E10 H10 F1000")
-
-    send_receive("M350 X4 Y4 Z4 E4 H4")
-    send("G1 X10 Y10 Z10 E10 H10 F1000")
-
-    send_receive("M350 X5 Y5 Z5 E5 H5")
-    send("G1 X10 Y10 Z10 E10 H10 F1000")
-
-    send_receive("M350 X0 Y0 Z0 E0 H0")
-    send("G1 X-4 Y-4 Z-4 E-4 H-4 F100")
-
-    send_receive("M400") # Wait until done
+    send_receive("G91")
+    time.sleep(1)
+    for i in range(7):
+        send_receive("M350 X{} Y{} Z{} E{} H{}".format(i, i, i, i, i)) # Microstepping
+	#send_receive("M400")
+	time.sleep(2)
+        send_receive("G1 X5 Y5 Z5 E5 H5 F6000")
+        send_receive("G1 X-5 Y-5 Z-5 E-5 H-5 F6000") 
+        #send_receive("M400") # Wait until done
+	time.sleep(2)
 
     print "Done"
 
 def enable_mosfets():
     print "enabling all mosfets"
-    send("M140 S200")
-    send("M104 P0 S200")
-    send("M104 P1 S200")
-    send("M106 P0 S255")
-    send("M106 P1 S255")
-    send("M106 P2 S255")
+    send_receive("M140 S200")
+    send_receive("M104 P0 S200")
+    send_receive("M104 P1 S200")
+    send_receive("M106 P0 S255")
+    send_receive("M106 P1 S255")
+    send_receive("M106 P2 S255")
+    send_receive("M106 P3 S255")
     print "Done"
 
 def test_thermistors():
@@ -138,14 +130,21 @@ def test_endstops():
                         return
 
 
+def home_all():
+    print "Homing all"
+    send_receive("M350 X0 Y0 Z0 E0 H0")
+    send_receive("G28", "Homing done.")
+    print "Homing done"
 
 wait_for_pipes()
-write_eeprom()
+#write_eeprom()
 enable_mosfets()
-test_endstops()
-time.sleep(1)
+home_all()
+
+#test_endstops()
+#time.sleep(3)
 test_steppers()
-test_thermistors()
+#test_thermistors()
 
 print "testing done!"
    
