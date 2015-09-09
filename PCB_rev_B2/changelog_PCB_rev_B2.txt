@@ -1,0 +1,18 @@
+Changelog Rev B1 -> Rev B2
+========================
+ + Removed the pullup-resistors on shift regs.
+ + Use a pin to configure enable on steppers. 
+ + Pull-downs on small mos-fets.
+ + Pull-ups on end-stop inputs.
+ + Two stage filter on PWM DAC. 
+ + Removed voltage divider on PWM DAC. 
+ + 4.7 uF wrong footprint/package
+ + Bypass using SYS_5V. 
+ + Large servos cause voltage drop disabling the CPU. 
+   + Consider using the same DC-DC converter for 5 V.  
+ + Add decoupeling caps on tristate regs
+ + Update BOM. 
+    + Cheaper 40K resistors
+    + Better precicion on 10K, 1%
+    + 0402 package on 10nF
+

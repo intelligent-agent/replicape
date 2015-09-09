@@ -1,0 +1,20 @@
+
+Solder mask color: Black
+Silkscreen color: White
+PCB Layers: 4
+
+Copper thickness: 35um
+
+
+Top copper layer: Replicape_B2.cmp
+Inner copper layer 1: Replicape_B2.ly2
+Inner copper layer 2: Replicape_B2.l15
+Bottom copper layer: Replicape_B2.sol
+
+Outline: Replicape_B2.pls
+
+Solder stop mask top layer: Replicape_B2.stc
+Silk screen top layer: Replicape_B2.plc
+Cream frame top: Replicape_B2.crc
+
+
