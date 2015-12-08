@@ -26,7 +26,7 @@ Replicape is a 3D printer cape for BeagleBone.
 * Compatible with [Manga Screen](https://bitbucket.org/intelligentagent/manga-screen)  
 * Single 12 to 24V PSU, fans are still 12V.  
 * Compatible with BeagleBone and BeagleBone Black (probably also green and blue).  
-* Open source hardware and software.  
+* Open source hardware and software. (CC BY-SA)  
 * Software written in Python for maintainability and hackability.  
   
 This is the repository for the hardware, the "firmware" (Redeem) has a [separate repository](https://bitbucket.org/intelligentagent/redeem)
