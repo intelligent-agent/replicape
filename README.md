@@ -9,23 +9,25 @@
              |_|                 |_|
 
 Replicape is a 3D printer cape for BeagleBone.  
-Features:  
--   5 stepper motors (Trinamic TMC2100) (X, Y, Z, E, H)  
--   3 high power MOSFETs (PWM controlled) for 2 extruders and 1 HPB.  (12..24V)  
--   4 medium power MOSFETs (PWM controlled) for up to 3 fans/LED strips.  (12V)  
--   3 analog input ports for thermistors. noise-filtered inputs and option for shielding  
--   6 inputs for end stops (X, Y, Z).  
--   1 bus for Dallas 1W temperature sensor for monitoring the cold end. Up to 10 sensors can be added to the bus.  
--   2 servo outputs.  
--   1 inductive sensor input.  
--   Programmable current limits on steppers motor drivers (SMD). No need to manually adjust a pot meter.  
--   Microstepping individually programmable for each SMD from 1 to 32.  
--   All steppers are controlled by the Programmable Realtime Unit (PRU) for hard real time operation.  
--   Compatible with [Manga Screen](https://bitbucket.org/intelligentagent/manga-screen)  
--   Single 12 to 24V PSU, fans are still 12V.  
--   Compatible with BeagleBone and BeagleBone Black (probably also green and blue).  
--   Open source hardware and software.  
--   Software written in Python for maintainability and hackability.  
+
+### Features: ###
+
+* 5 stepper motors (Trinamic TMC2100) (X, Y, Z, E, H)  
+* 3 high power MOSFETs (PWM controlled) for 2 extruders and 1 HPB.  (12..24V)  
+* 4 medium power MOSFETs (PWM controlled) for up to 4 fans/LED strips.  (12V)  
+* 3 analog input ports for thermistors. noise-filtered inputs and option for shielding  
+* 6 inputs for end stops (X, Y, Z).  
+* 1 bus for Dallas 1W temperature sensor for monitoring the cold end. Up to 10 sensors can be added to the bus.  
+* 2 servo outputs.  
+* 1 inductive sensor input.  
+* Programmable current limits on steppers motor drivers (SMD). No need to manually adjust a pot meter.  
+* Microstepping individually programmable for each SMD from 1 to 256.  
+* All steppers are controlled by the Programmable Realtime Unit (PRU) for hard real time operation.  
+* Compatible with [Manga Screen](https://bitbucket.org/intelligentagent/manga-screen)  
+* Single 12 to 24V PSU, fans are still 12V.  
+* Compatible with BeagleBone and BeagleBone Black (probably also green and blue).  
+* Open source hardware and software.  
+* Software written in Python for maintainability and hackability.  
   
 This is the repository for the hardware, the "firmware" (Redeem) has a [separate repository](https://bitbucket.org/intelligentagent/redeem)
 
@@ -36,7 +38,7 @@ This is the repository for the hardware, the "firmware" (Redeem) has a [separate
 
 ### I want one! How much is it, and where can I get it? ###
 
-[Buy it in the store](http://www.thing-printer.com/product/replicape)
+It's $99 and you can [buy it in the store](http://www.thing-printer.com/product/replicape)
 
 ### I want to build my own board. How do I do that? ###
 
@@ -57,8 +59,8 @@ The thing-prnter blog is a good place: [http://www.thing-printer.com/blog/](http
 
 ### Who has contributed to this project? ###
 
-Elias Bakken
-Dirk Eichel
-Stoneshop
-Bent Furevik
+* Elias Bakken
+* Dirk Eichel
+* Stoneshop
+* Bent Furevik
 
