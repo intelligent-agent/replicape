@@ -1,7 +1,7 @@
 # Makefile for flashing the eeprom of the Replicape
 
 all:
-	nodejs ./eeprom.js -w replicape_00B2.json
+	nodejs ./eeprom.js -w replicape_00B3.json
 
 install:
 	cat Replicape.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem
