@@ -41,22 +41,22 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/replicape/test/Replicape_00B2.eeprom > /sys/bus/i2c/devices/2-0054/nvmem/at24-1/nvmem")
+    os.system("cat /usr/src/replicape/test/Replicape_00B2.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem")
     print "Done"
 
 
 def test_steppers():
     print "testing steppers"
     send_receive("G91")
-    time.sleep(1)
+    #time.sleep(1)
     for i in range(7):
         send_receive("M350 X{} Y{} Z{} E{} H{}".format(i, i, i, i, i)) # Microstepping
 	#send_receive("M400")
-	time.sleep(2)
-        send_receive("G1 X5 Y5 Z5 E5 H5 F6000")
-        send_receive("G1 X-5 Y-5 Z-5 E-5 H-5 F6000") 
-        #send_receive("M400") # Wait until done
-	time.sleep(2)
+	#time.sleep(2)
+        send_receive("G1 X10 Y10 Z10 E10 H10 F6000")
+        send_receive("G1 X-10 Y-10 Z-10 E-10 H-10 F6000") 
+        send_receive("M400") # Wait until done
+	#time.sleep(2)
 
     print "Done"
 
@@ -140,11 +140,8 @@ wait_for_pipes()
 write_eeprom()
 enable_mosfets()
 home_all()
-
-#test_endstops()
-#time.sleep(3)
 test_steppers()
-#test_thermistors()
+test_thermistors()
 
 print "testing done!"
    
