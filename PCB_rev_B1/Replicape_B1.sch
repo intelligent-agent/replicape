@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE eagle SYSTEM "eagle.dtd">
-<eagle version="7.2.0">
+<eagle version="6.6.0">
 <drawing>
 <settings>
 <setting alwaysvectorfont="no"/>
@@ -20364,7 +20364,7 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <wire x1="642.62" y1="751.84" x2="650.24" y2="751.84" width="0.6096" layer="91"/>
 </segment>
 </net>
-<net name="N$14" class="0">
+<net name="CPO_Z" class="0">
 <segment>
 <wire x1="652.78" y1="774.7" x2="652.78" y2="769.62" width="0.6096" layer="91"/>
 <wire x1="652.78" y1="769.62" x2="642.62" y2="769.62" width="0.6096" layer="91"/>
@@ -20406,7 +20406,7 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <wire x1="642.62" y1="718.82" x2="652.78" y2="718.82" width="0.1524" layer="91"/>
 </segment>
 </net>
-<net name="N$27" class="0">
+<net name="CPI_Z" class="0">
 <segment>
 <pinref part="IC5" gate="IC" pin="CPI"/>
 <pinref part="C7" gate="G$1" pin="1"/>
@@ -20446,7 +20446,7 @@ EAGLE CAD Libraries on element14&lt;/a&gt;</description>
 <junction x="589.28" y="774.7"/>
 </segment>
 </net>
-<net name="N$52" class="0">
+<net name="VCP_Z" class="0">
 <segment>
 <pinref part="IC5" gate="IC" pin="VCP"/>
 <pinref part="C38" gate="G$1" pin="1"/>

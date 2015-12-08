@@ -32,8 +32,8 @@
 <layer number="22" name="bPlace" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="23" name="tOrigins" color="15" fill="1" visible="yes" active="yes"/>
 <layer number="24" name="bOrigins" color="15" fill="1" visible="yes" active="yes"/>
-<layer number="25" name="tNames" color="7" fill="1" visible="no" active="yes"/>
-<layer number="26" name="bNames" color="7" fill="1" visible="no" active="yes"/>
+<layer number="25" name="tNames" color="7" fill="1" visible="yes" active="yes"/>
+<layer number="26" name="bNames" color="7" fill="1" visible="yes" active="yes"/>
 <layer number="27" name="tValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="28" name="bValues" color="7" fill="1" visible="no" active="yes"/>
 <layer number="29" name="tStop" color="7" fill="3" visible="yes" active="yes"/>
@@ -3312,7 +3312,8 @@ design rules under a new name.</description>
 <attribute name="NAME" x="12.79" y="31.965" size="0.6096" layer="25" rot="R90"/>
 </element>
 <element name="U18" library="custom" package="SOIC127P600X175-8N" value="CAT24C256" x="33.575" y="51" smashed="yes" rot="R270">
-<attribute name="NAME" x="30.7996" y="51.7638" size="0.6096" layer="25" ratio="10" rot="SR90"/>
+<attribute name="NAME" x="30.22" y="54.0544" size="0.6096" layer="25" ratio="10" rot="SR270"/>
+<attribute name="VALUE" x="27.86" y="54.4544" size="2.0828" layer="27" ratio="10" rot="SR270"/>
 </element>
 <element name="LOGO1" library="ohw-logo" package="OSHW_FILLX200_NOTEXT" value="OSHW_LOGO_FILLX0200-NT" x="83.8584" y="17.5102" smashed="yes"/>
 <element name="LED8" library="led" package="CHIP-LED0603" value="blue" x="11.575" y="1" smashed="yes" rot="R90">
