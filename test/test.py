@@ -3,6 +3,7 @@
 import time
 import os, os.path
 import sys
+import re
 
 sys.stdout = sys.stderr
 
@@ -41,23 +42,18 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/replicape/test/Replicape_00B2.eeprom > /sys/bus/i2c/devices/2-0054/nvmem/at24-1/nvmem")
+    os.system("cat /usr/src/replicape/eeprom/Replicape_00B3.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem")
     print "Done"
 
 
 def test_steppers():
     print "testing steppers"
     send_receive("G91")
-    time.sleep(1)
-    for i in range(7):
+    for i in range(9):
         send_receive("M350 X{} Y{} Z{} E{} H{}".format(i, i, i, i, i)) # Microstepping
-	#send_receive("M400")
-	time.sleep(2)
-        send_receive("G1 X5 Y5 Z5 E5 H5 F6000")
-        send_receive("G1 X-5 Y-5 Z-5 E-5 H-5 F6000") 
-        #send_receive("M400") # Wait until done
-	time.sleep(2)
-
+        send_receive("G1 X10 Y10 Z10 E10 H10 F6000")
+        send_receive("G1 X-10 Y-10 Z-10 E-10 H-10 F6000") 
+        send_receive("M400") # Wait until done
     print "Done"
 
 def enable_mosfets():
@@ -73,62 +69,35 @@ def enable_mosfets():
 
 def test_thermistors():
     print "testing thermistors"
+
     ret = send_receive("M105")
-    pos = ret.find("T:")
-    pos2 = ret.find("B:")
-    t0 = float(ret[pos+2:pos2])
-    pos = ret.find("B:")
-    pos2 = ret.find("T1:")
-    t1 = float(ret[pos+2:pos2])
-    pos = ret.find("T1:")
-    pos2 = ret.find("\n")
-    t2 = float(ret[pos+3:])
-    
+
+    temps = re.findall("[0|1|B]\:(\d+)", ret)
+    temps = [abs(26-float(t)) for t in temps]
+
     ok = {"t0": 0, "t1": 0, "t2": 0}
-    if abs(t0-100) < 4:
+    if temps[0] < 4:
         ok["t0"] = 1
-    if abs(t1-100) < 4:
+    if temps[1] < 4:
         ok["t1"] = 1
-    if abs(t2-100) < 4:
+    if temps[2] < 4:
         ok["t2"] = 1          
 
     if not 0 in ok.values(): # All OK
-        enable_mosfets()    
+        disable_mosfets()    
     else: 
         print "Error in thermistors. Returned '"+ret+"'"
     print "Done"
 
-def disable_mosfet(val):
-    if val == "X1":
-        send("M106 P0 S0")
-    if val == "Y1":
-        send("M106 P1 S0")
-    if val == "Z1":
-        send("M106 P2 S0")
-    if val == "X2":
-        send("M104 P0 S0")
-    if val == "Y2":
-        send("M140 S0")
-    if val == "Z2":
-        send("M104 P1 S0")
-
-def test_endstops():
-    print "testing endstops. Push each of the switches"
-    ok = { "Y2": 0, "Y1": 0, "X2": 0, "X1": 0, "Z1": 0, "Z2": 0 }
-    while True:
-        ret = send_receive("M119")
-        for endstop in ok:
-            if not ok[endstop]:
-                pos = ret.find(endstop)
-                val = ret[pos+4]
-                if int(val):
-                    print endstop+" is OK"
-                    ok[endstop] = 1
-                    disable_mosfet(endstop)
-                    if not 0 in ok.values():
-                        print "All OK"
-                        return
-
+def disable_mosfets():
+    print "Disabing mosfets"
+    send("M106 P0 S0")
+    send("M106 P1 S0")
+    send("M106 P2 S0")
+    send("M106 P3 S0")
+    send("M104 P0 S0")
+    send("M140 S0")
+    send("M104 P1 S0")
 
 def home_all():
     print "Homing all"
@@ -140,11 +109,8 @@ wait_for_pipes()
 write_eeprom()
 enable_mosfets()
 home_all()
-
-#test_endstops()
-#time.sleep(3)
 test_steppers()
-#test_thermistors()
+test_thermistors()
 
 print "testing done!"
    
