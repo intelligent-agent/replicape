@@ -54,6 +54,7 @@ def test_steppers():
         send_receive("G1 X10 Y10 Z10 E10 H10 F6000")
         send_receive("G1 X-10 Y-10 Z-10 E-10 H-10 F6000") 
         send_receive("M400") # Wait until done
+    send_receive("M18")
     print "Done"
 
 def enable_mosfets():
