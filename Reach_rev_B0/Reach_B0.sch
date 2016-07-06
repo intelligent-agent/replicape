@@ -16779,6 +16779,20 @@ by exp-lbrs.ulp</description>
 <label x="581.66" y="40.64" size="1.778" layer="95"/>
 </segment>
 </net>
+<net name="THERMO_1" class="0">
+<segment>
+<pinref part="P9" gate="G$1" pin="37"/>
+<wire x1="563.88" y1="43.18" x2="538.48" y2="43.18" width="0.1524" layer="91"/>
+<label x="538.48" y="43.18" size="1.778" layer="95"/>
+</segment>
+</net>
+<net name="THERMO_2" class="0">
+<segment>
+<pinref part="P9" gate="G$1" pin="38"/>
+<wire x1="579.12" y1="43.18" x2="604.52" y2="43.18" width="0.1524" layer="91"/>
+<label x="581.66" y="43.18" size="1.778" layer="95"/>
+</segment>
+</net>
 </nets>
 </sheet>
 </sheets>

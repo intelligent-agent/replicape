@@ -5,7 +5,8 @@ import os, os.path
 import sys
 import re
 
-sys.stdout = sys.stderr
+#sys.stdout = sys.stderr
+sys.stdout = open('/dev/tty1', 'w')
 
 TTY_NORET="/dev/testing_1"
 TTY_RET="/dev/toggle_1"
@@ -28,7 +29,7 @@ def send_receive(msg, match = None):
     if match is not None: 
         while ret != match:
             ret = readline_custom(f)
-            print "ret: "+ret
+            #print "ret: "+ret
     os.close(f)
     return ret
     
@@ -42,7 +43,7 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/replicape/eeprom/Replicape_00B3.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem")
+    os.system("cat /usr/src/replicape/test/Replicape_0B3A.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem")
     print "Done"
 
 
@@ -92,13 +93,13 @@ def test_thermistors():
 
 def disable_mosfets():
     print "Disabing mosfets"
-    send("M106 P0 S0")
-    send("M106 P1 S0")
-    send("M106 P2 S0")
-    send("M106 P3 S0")
-    send("M104 P0 S0")
-    send("M140 S0")
-    send("M104 P1 S0")
+    send_receive("M106 P0 S0")
+    send_receive("M106 P1 S0")
+    send_receive("M106 P2 S0")
+    send_receive("M106 P3 S0")
+    send_receive("M104 P0 S0")
+    send_receive("M140 S0")
+    send_receive("M104 P1 S0")
 
 def home_all():
     print "Homing all"
