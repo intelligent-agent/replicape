@@ -11,6 +11,8 @@ sys.stdout = open('/dev/tty1', 'w')
 TTY_NORET="/dev/testing_1"
 TTY_RET="/dev/toggle_1"
 
+board_ok = True
+
 def wait_for_pipes():
     while not os.path.exists(TTY_NORET):
         time.sleep(0.1)
@@ -27,7 +29,7 @@ def send_receive(msg, match = None):
     os.write(f, msg+"\n")
     ret = readline_custom(f)
     if match is not None: 
-        while ret != match:
+        while not match in ret :
             ret = readline_custom(f)
             #print "ret: "+ret
     os.close(f)
@@ -43,7 +45,9 @@ def readline_custom(f):
 
 def write_eeprom():    
     print "Writing EEPROM"
-    os.system("cat /usr/src/replicape/test/Replicape_0B3A.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem")
+    with open("/sys/bus/i2c/devices/2-0054/at24-1/nvmem", "w") as f:
+	with open("/usr/src/replicape/test/Replicape_0B3A.eeprom") as f2:
+		f.write(f2.read())
     print "Done"
 
 
@@ -87,12 +91,14 @@ def test_thermistors():
 
     if not 0 in ok.values(): # All OK
         disable_mosfets()    
+	print "Thermistors OK"
     else: 
+	global board_ok
+	board_ok = False
         print "Error in thermistors. Returned '"+ret+"'"
-    print "Done"
 
 def disable_mosfets():
-    print "Disabing mosfets"
+    #print "Disabing mosfets"
     send_receive("M106 P0 S0")
     send_receive("M106 P1 S0")
     send_receive("M106 P2 S0")
@@ -102,18 +108,42 @@ def disable_mosfets():
     send_receive("M104 P1 S0")
 
 def home_all():
-    print "Homing all"
+    print "Testing Endstops"
     send_receive("M350 X0 Y0 Z0 E0 H0")
     send_receive("G28", "Homing done.")
-    print "Homing done"
+    # home_* = offset_*, so all 
+    # end stops should now be clicked. 
+    ret = send_receive("M119", "X1")
+    #print ret
+    if "False" in ret: 
+	global board_ok
+        board_ok = False
+    	print "Error testing end stops"
+    else:
+        print "Endstops are OK"
+    send_receive("G0 X0 Y0 Z0 E0 H0")
+
+
+def disable_keys():
+    os.system("loadkeys /usr/src/replicape/test/replicape.kmap")
+    #with open("/sys/devices/platform/ocp/ocp:gpio_keys/disabled_keys", "w") as f:
+    #	f.write("112-117")
 
 wait_for_pipes()
+print "\033c"
+disable_keys()
+print "Starting test of Replicape B3A"
 write_eeprom()
 enable_mosfets()
 home_all()
 test_steppers()
 test_thermistors()
-
-print "testing done!"
-   
+if board_ok: 
+	print "Board OK!"
+	os.system("fbi -d /dev/fb0 -T 1 -noverbose /usr/src/replicape/test/ok.png")
+	time.sleep(10)
+else:
+	print "Error testing board!"   	
+        os.system("fbi -d /dev/fb0 -T 1 -noverbose /usr/src/replicape/test/error.png")
+        time.sleep(10)
 
