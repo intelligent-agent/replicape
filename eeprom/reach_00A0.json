@@ -1,0 +1,17 @@
+{
+ "Reach_00A0.eeprom": {
+    "type": "cape",
+    "header": "aa5533ee",
+    "formatRev": "1",
+    "boardName": "Reach expansion board",
+    "version": "00A0",
+    "manufacturer": "Intelligent Agent AS",
+    "partNumber": "BB-BONE-REACH",
+    "numPins": 29,
+    "serialNumber": "00000000001",
+    "currentVDD_3V3EXP": 40,
+    "currentVDD_5V": 0,
+    "currentSYS_5V": 0,
+    "DCSupplied": 0
+ }
+}

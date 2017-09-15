@@ -1,0 +1,123 @@
+Changelog Rev A4A -> Rev B1
+========================
+
+Done:
+ + 3-pin end stop input connectors 
+	- The chosen pin config (sig, 5v, gnd) is compatible with servos. 
+	- Except Z2 which also has 12V available: (sig, 5V, gnd, 12V)
+ + Added CD4050BD allows for 15 V inputs on all end stop inputs
+ + 2-pin thermistor input
+ + Servo output on endstop x2 / y2
+	Using 2x M74VHC1GT126
+ + Hardcode EEPROM address to 0x54
+	- Price reduction and board space. 
+ + Major League headers: 
+	- Price reduction
+ + DAC exchanged with PWM + RC for IREF. 
+	- 1. order low pass filter, R=10K, C=4.7uF gives 13.0mV ripple at 1 KHz. 
+	Maximum attainable precision is 2.5/4096 = 0.61 mV 
+   	- Online tool: http://sim.okawa-denshi.jp/en/PWMtool.php
+	- TODO: Increase PWM or use sharper filter. 
+ + Blue LED to indicate fuse blown 
+	- Price reduction (BOM lines)
+ + Larger bulk capacitance. 
+	- New electrolytic Capacitors (one for each stepper driver)
+ + Reverse polarity protection. 
+	- MBRA shotky diode. 
+ + Remove gate driver on main mosfet. 
+	The gate capacitiance of the AON6758 is 92pf. 
+	With 100 ohm series resitors on the power mosfet gate, the 
+	rise time is 60ns giving a slew rate of 500 V/uS. This equates to 
+	46 mA maxiumum current drawn. The PCA986 has a maximum current source capacity of 
+	10 mA, giving a maxiumum slew rate of 109 V/uS which gives a power dissipation 
+	of 3? W at 180W load with a PWM frequency of 1 KHz. 
+ + Remove 4.7K res on address of PCA986. 
+	- Price and board space reduction
+	- This is given as example in PCA986 datasheet. 
+ + New stepper drivers: TMC2100
+	- Lower audible noise level on steppers. 
+ + PWM for servos from BBB. 
+ + Four pin connector on end stop Z2 adds 12V for magnetic resonance sensor. 
+ + New Capacitors: Better capacitance at higher voltage. 
+ + New low power mos fets: End of life, lower price smaller footprint. 
+ + Less BOM lines 
+ + 500 ohm series resistors = 10 mA on all mosfets. 
+ + Use free pin on shift registers to enable servo outputs
+ + Make sure heaters are turned off in case of kernel panic. 
+	- Using BBB watchdog in conjunction with enable pin on P9.41. 
+ + Removed External connector since PWM ciurcuit needs to be available on 
+	 Reach anyway. Use SPI_CS0 for the shift registers. 
+
+NOTES: 
+Stepper drivers: 
+ - TMC2100: $2.5
+	+ Cheaper
+   	+ More configuration options for lower noise. 
+   	- Tristate configurations. 
+
+- Reverse Polarity protection on input:
+	- Currently using MBRA340T3 in a crowbar connection. 
+	Alternative: AON6407, PFET. 
+	- More expensive
+	- More effect loss (5mOhm x Vin x Iin)
+	+ Does not blow the fuse. 
+
+ADC precicion calculations: 
+ - 12 bit ADC, 1.8V range: 1.8/4096 = 439uV pr bit. 
+ - Oversampling
+
+Concerns: 
+ - 3.3V logic input although tri state buffers are using 5V VCC for servos. 
+ - ADC filtering: Should I use GND_ANA or GND_D? 
+ - Low power mosfets, flyback diode? Snubber? 
+	- No, not inductiuve load. (well, it might be but not a large inductive) 
+ - Capacitance for fans? 
+	- No, not an inductive load/small load 
+ - Schotky diode for reverse polarisation. Must test that is can withstand the power until fuse blows. 
+ - Mosfet cooling on drain side 
+
+TMC2100 notes: 
+ - Layout is based on the exmaple in section 
+	16.4 of the datasheet. 
+ - External 5V is available, but since it is from a 
+	buck regulator, the ripple is probably below 
+	the acceptable levels of 5 mV. 
+- AIN Iref using PWM: 
+	- 2.5V @ 12 bit = 0.61 mV 
+	- Datasheet recommends: 22K + 1uF low pass @ 20KHz = 1.4mV ripple 
+	20 KHz gives higher 
+	- 10K + 4.7uF low pass @ 1K  = 133mV ripple
+	- 22K + 4.7uF low pass @ 1K  = 6.0mV ripple
+	- 47K + 10 uF low pass @ 1K  = 1.3mV ripple
+	- 10K + 4.7uF low pass @ 10K = 1.3mV ripple, using this. 
+- DIAG1 - Index output is left unconnected, since it does not offer any 
+	value in this application.
+- CFG 3 is left open: 
+	-External reference voltage on pin AIN. Current scale set by sense resistors and
+	scaled by AIN. 
+
+- CFG0 = Chopper off time: High or low. 
+- CFG2 = Microstepping: High, low or Open
+- CFG1 = Microstepping: High or low. 
+- CFG3 = Use Ext. ref.: Open
+- CFG4 = Chopper hysteresis: High or Low 
+- CFG5 = Chopper blank time: High or low
+- CFG6 = Enable: Connected to common enable. 
+
+PWM notes: 
+	- Rdson @ 5V = 0.005 ohm
+	- Heating element 180 W @ 12 V:  15 A,  R = U/I = 12/15 = 0.8 ohm
+	- Effect loss in Mosfet @ fully on: 1.125 W
+	- Max effect loss in package: 4.1W
+	- Rise time is I/C = 10mA/92pF = 109V/us => rise time is 12/109 = 0.11 uS
+	- Time spent switching @ 10KHz: (1.1*10^-7)/(10^-4) ms = 0.11%
+	- Assuming linear switching (wrong assumption, but WTH)
+	- TODO: calculate Effect loss @ 10KHz
+	
+ - CE-markings. Not necessary since it is not a consumer product. 
+
+
+
+
+
+

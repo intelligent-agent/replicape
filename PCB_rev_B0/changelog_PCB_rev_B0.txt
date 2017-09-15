@@ -1,0 +1,114 @@
+Changelog Rev A4A -> Rev B0
+========================
+
+
+
+TODO: 
+ - Check BOM against 
+ - New Mosfets for fans. Add snubber and flyback. 
+ - Skjematikk: polarity protection
+	Bruker en ekstra MBRA340T3 i en crowbar-kobling. MÅ TESTES PÅ FORHÅND!
+	Alternativ: AON6407, PFET. 
+	Dyrere
+	Mye effekttap (5mOhm x Vin x Iin)
+	Blåser ikke sikringen.
+	Reverse polarisation protection (beskyttelse mot å koble + og - motsatt) (P-FET transistor?)
+
+ - CE-godkjenning (innebærer lavere elektromagnetisk støy-nivå, mest sannsynlig 4-lags PCB)	
+
+Done:
+ + Skjematikk: 3-pin end stop input connectors (sig, 5v, gnd)
+ + Schematics: Added CD4050BD allows for 15 V inputs converted down to 3.3V. 
+ + BOM-cost: funnet rimeligere alternativer TI SN74AHC595PW byttes til ON Semi MC74HC595ADTG halv pris: ca 0.21$ til 0.12$
+ + Skjematikk: 2-pin thermistor input
+ + Skjematikk: mixed-mode pin på stepper-kontrollere
+	Bruker 5x M74VHC1GT126 voltage-translating tri-state buffer (.055$ pr stk)
+ + Skjematikk: Servo output på endstop_x/y_2
+	Bruker 2x M74VHC1GT126
+ + Schematics: DAC exchanged with PWM + RC for IREF. 
+ + Hardcode EEPROM address to 0x54: Price reduction and board space. 
+ + Major League headers: Price reduction
+ + Use PWM as DAC: 
+	- 1. order low pass filter, R=10K, C=4.7uF gives 17.0mV ripple at 1 KHz. 
+	Maximum attainable precision is 3.3V/4096 = 0.8 mV 
+   	- http://sim.okawa-denshi.jp/en/PWMtool.php
+	- TODO: Increase PWM or use sharper filter. 
+ + Blue LED to indicate fuse blown 
+ + Larger bulk capacitance. New electrolytic Capacitors (one for each stepper driver)
+ + Reverse polarity protection. 
+	- MBRA shotky diode. 
+ + Remove gate driver on main mosfet. 
+	The gate capacitiance of the AON9... is 92pf. 
+	With 100 ohm series resitors on the power mosfet gate, the 
+	rise time is 60ns giving a slew rate of 500 V/uS. This equates to 
+	46 mA maxiumum current drawn. The PCA986 has a maximum current source capacity of 
+	10 mA, giving a maxiumum slew rate of 100 V/uS which gives a power dissipation 
+	of ?? W at 180W load with a PWM frequency of 1 KHz. 
+ + Remove 4.7K res on address of PCA986. 
+	- Price and board space reduction
+	- This is given as example in PCA986 datasheet. 
+ + New DRV8825 layout
+	- Lower audible noise level on steppers. 
+	- Better heat dissipation (enables higher max current, cooler running)
+ + PWM for servos from BBB. 
+ + Four pin connector on end stop Z2 adds 12V for magnetic resonance sensor. 
+ + New Capacitors: Better capacitance at higher voltage. 
+ + New low power mos fets: End of life, lower price smaller footprint. 
+ + Less BOM lines 
+ + 500 ohm series resistors = 10 mA on all mos fets. 
+ + Use free pin on shift registers to enable servo outputs
+ + Make sure heaters are turned off in case of kernel panic. 
+	- Using BBB watchdog in conjunction with enable pin on P9.41. 
+
+
+NOTES: 
+Stepper drivers: 
+ - TMC2100: $2.5
+   + Cheaper
+   + More buzz. 
+   - Tristate configurations. 
+   -  
+ - DRV8825: $2.7
+   + Layout finished. 
+
+
+Enable PWM:
+Trigger kernel panic
+
+echo 116 > /sys/class/gpio/export 
+echo out > /sys/class/gpio/gpio116/direction
+echo 1 > /sys/class/gpio/gpio116/value 
+echo c > /proc/sysrq-trigger
+
+A kernel panic will keep the GPIO in its current state...
+We need some sort of watchdog timer. 
+ - Solution: Use the built in watchdog timer on BBB. 
+
+Gate driver removal:
+TODO: sink/source calculations- 
+
+ - Research: programmerbar slew-rate
+	digipot med lav nok resistans + høy nok operating voltage til å settes mellom gate driver og mosfet ser ikke ut til å finnes
+ - Lavere støynivå på Mosfetene, muligens programmerbar slew-rate. 
+
+
+ADC precicion calculations: 
+ - 12 bit ADC, 1.8V range: 1.8/4096 = 439uV pr bit. 
+ - Oversampling
+
+
+Mixed mode current decay: 
+ - Internal pullups/pulldowns are 130K/80K in DRV8825, 
+   so external pullups/pulldowns of 4.7K/4.7K should place the
+   pin floating at 3.3V/2. 
+
+
+
+
+Concerns: 
+ - 3.3V logic input although buffers are using 5V VCC. 
+ - ADC filtering: Should I use GND_ANA or GND_D? 
+ - Low power mosfets, flyback diode? Snubber?
+ - Capacitance for fans? 
+ - Schotky diode for reverse polarisation. 
+

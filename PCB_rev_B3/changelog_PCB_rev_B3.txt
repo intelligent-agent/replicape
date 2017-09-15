@@ -1,0 +1,18 @@
+Changelog Rev B2 -> Rev B3
+========================
+
+TODO: 
+
+DONE: 
+ + C28 etc. too close. 
+ + Change pin-out on end stops. 
+ + Change pin-out on Steppers.
+ + Remove names from silk screen
+ + Exposed thermal vias on the underside of the PCB.  
+ + Tri-state buffers on enable steppers to facilitate power down mode. 
+ + Wrong voltage divider value for thermistors, 470K instead of 4.7K. 
+
+CONCERNS: 
+ - Hot electolytic capaciors. Test with better PSU. 
+ - Heaters not in use slightly dim. 
+

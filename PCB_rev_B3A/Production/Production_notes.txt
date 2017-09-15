@@ -1,0 +1,24 @@
+
+Solder mask color: Black
+Silkscreen color: White
+PCB Layers: 4
+
+Copper thickness: 35um
+
+Top copper layer: Replicape_B3A.cmp
+Inner copper layer 1: Replicape_B3A.ly2
+Inner copper layer 2: Replicape_B3A.l15
+Bottom copper layer: Replicape_B3A.sol
+
+Outline: Replicape_B3A.pls
+
+Solder stop mask top layer: Replicape_B3A.stc
+Silk screen top layer: Replicape_B3A.plc
+Cream frame top: Replicape_B3A.crc
+
+Statistics: 
+===========
+Length: 107.30 mm
+Height: 69.55 mm
+Number of SMD pads: 825
+Number of Through holes: 167

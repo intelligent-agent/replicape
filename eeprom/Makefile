@@ -1,13 +1,17 @@
 # Makefile for flashing the eeprom of the Replicape
 
-all: $(DIST)
+all:
+	nodejs ./eeprom.js -w replicape_00B3.json
 
-angstrom:
-	node ./eeprom.js -w replicape_00A4.json
-	cat Replicape.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom
+install:
+	cat Replicape.eeprom > /sys/bus/i2c/devices/2-0054/at24-1/nvmem
+	#cat Replicape.eeprom > /sys/devices/platform/ocp/4819c000.i2c/i2c-2/2-0054/eeprom
+	#cat Replicape.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom
 
-ubuntu:
-	sudo apt-get install nodejs
-	nodejs ./eeprom.js -w replicape_00A4.json
-	cat Replicape.eeprom > /sys/bus/i2c/drivers/at24/1-0054/eeprom
-	
+
+reach:
+	node ./eeprom.js -w reach_00A0.json
+    
+install-reach:
+	cat Reach_00A0.eeprom > /sys/bus/i2c/drivers/at24/1-0057/eeprom
+
