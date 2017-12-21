@@ -1,20 +1,19 @@
 
 TODO: 
  + Add 41 pin connector, place it near the Ethernet cable. 
- - Do not use keyed horizontal headers.
  - Keep the connectors that we have, change end stop wiring, so they are not tied to common ground. 
  - 4 x 12V fans!
  - RTD drop in replacement, Add jumper to Select voltage divider for RTD1000
- - Do not Change stepper and end stop connectors to keyed versions. 
  - Double check the final price.
  - Add a second thermistor for measuring chamber tmeperature, use T1 for that.
+ - Perhaps use pin 1 and 2 for T1? 
  - Check price on EuroCircuits for 2 and 15 boards. 
 
 Notes: 
+ + Needs to either move the BBB, longer 41 pin cable or add a mounting plate. 
  - Choosing horizontal 41 pin connector to keep profile low. 
- - Needs to either move the BBB, longer 41 pin cable or add a mounting plate. 
- - Pin 9/10 Not connected to anything. 
- - Pin 1 and 2 not connected to anything. 
+ - Pin 9/10 Not connected to anything. Is this right? 
  - Choosing 0.3 mm traces for Stepper X and E, due to 24V input. 
+ - Do not use keyed horizontal headers.
 
 
